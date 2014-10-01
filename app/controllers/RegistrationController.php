@@ -25,14 +25,14 @@ class RegistrationController extends \BaseController {
 		  return View::make('registration.create');
 	}
 
-	public function store(){
-
+	public function store()
+	{
 		$this->registrationForm->validate(Input::all());
 
 		extract(Input::only('username','email','password'));
 
 		$user = $this->execute(
-			new RegisterUserCommand($username, $email, $password)
+			new RegisterUserCommand($username, $email, Hash::make($password))
 		);
 		
 		Auth::login($user);
