@@ -14,6 +14,8 @@ class StatusController extends \BaseController {
 
 	function __construct(PublishStatusForm $publishStatusForm, StatusRepository $statusRepository)
 	{
+		$this->beforeFilter('auth');
+
 		$this->statusRepository  = $statusRepository;
 		$this->publishStatusForm = $publishStatusForm;
 	}

@@ -39,7 +39,7 @@ Route::post('login', [
 
 Route::get('logout', [
 	'as' => 'logout_path',
-	'uses' => 'SessionsCOntroller@destroy'
+	'uses' => 'SessionsController@destroy'
 ]);
 
 Route::get('statuses', [
@@ -51,3 +51,14 @@ Route::post('statuses', [
 	'as' => 'statuses_path',
 	'uses' => 'StatusController@store'
 ]);
+
+Route::get('users', [
+	'as' => 'users_path',
+	'uses' => 'UsersController@index'
+]);
+
+Route::get('@{username}', [
+	'as' => 'profile_path',
+	'uses' => 'UsersController@show'
+]);
+

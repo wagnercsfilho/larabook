@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Factory as Faker;
 use Larabook\users\user;
 
 class UserTableSeeder extends Seeder
@@ -7,13 +8,18 @@ class UserTableSeeder extends Seeder
 
 	public function run()
 	{
-		DB::table('users')->delete();
-		User::create(array(
-			'name'     => 'Chris Sevilleja',
-			'username' => 'sevilayha',
-			'email'    => 'chris@scotch.io',
-			'password' => Hash::make('awesome'),
-		));
+		
+		$faker = Faker::create();
+
+		foreach (range(11,50) as $index) 
+		{
+			User::create(array(
+				'username' => $faker->word . $index,
+				'email'    => $faker->email,
+				'password' => 'secret',
+			));
+		}
+		
 	}
 
 }

@@ -1,17 +1,14 @@
-<?php 
+<?php namespace Larabook\Users;
 
 use Laracasts\Presenter\Presenter;
 
 class UserPresenter extends Presenter {
 
-    public function fullName()
+    public function gravatar($size = 30)
     {
-        return $this->first . ' ' . $this->last;
-    }
+    	$email = md5($this->email);
 
-    public function accountAge()
-    {
-        return $this->created_at->diffForHumans();
+		return '//www.gravatar.com/avatar/'.$email.'?s='.$size;
     }
 
 }
