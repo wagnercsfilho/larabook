@@ -9,12 +9,19 @@ use Laracasts\Commander\Events\EventGenerator;
 use Laracasts\Presenter\PresentableTrait;
 use Eloquent, Hash;
 
+/**
+ * Class User
+ * @package Larabook\Users
+ */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 
 
-	protected $fillable = ['username', 'email', 'password']; 
+    /**
+     * @var array
+     */
+    protected $fillable = ['username', 'email', 'password'];
 
 	/*
 	 *
@@ -22,9 +29,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+    /**
+     * @var string
+     */
+    protected $table = 'users';
 
-	protected $presenter = 'Larabook\Users\UserPresenter';
+    /**
+     * @var string
+     */
+    protected $presenter = 'Larabook\Users\UserPresenter';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -34,24 +47,47 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
 
-	public function statuses()
+    /**
+     * @return mixed
+     */
+    public function statuses()
 	{
 		return $this->hasMany('Larabook\Statuses\Status');
 	}
-	
-	public function setPasswordAttribute($password)
+
+    /**
+     * @param $password
+     */
+    public function setPasswordAttribute($password)
 	{
 	    $this->attributes['password'] = Hash::make($password);
 	}
 
 
-	public static function register($username, $email, $password)
+    /**
+     * @param $username
+     * @param $email
+     * @param $password
+     * @return static
+     */
+    public static function register($username, $email, $password)
 	{
 		$user = new static(compact('username','email','password'));
 
 		$user->raise(new UserRegistered($user));
 
 		return $user;
+	}
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function is($user)
+	{
+        if (is_null($user)) return false;
+
+		return $this->username == $user->username;
 	}
 
 	/**
@@ -83,4 +119,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
+
+    /**
+     * @return mixed
+     */
+    public function follows()
+    {
+        return $this->belongsToMany(self::class, 'follows', 'follower_id', 'followed_id')->withTimestamps();
+    }
+
+    public function isFollowedBy(User $otherUser)
+    {
+        $idsWhoOtherUserFollows = $otherUser->follows()->lists('followed_id');
+
+        return in_array($this->id, $idsWhoOtherUserFollows);
+    }
+
+
 }
