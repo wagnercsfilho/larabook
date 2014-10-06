@@ -24,6 +24,14 @@ class Status extends \Eloquent
 		$status = new static(compact('body'));
 		$status->raise(new StatusWasPublished($body));
 		return $status;
-	} 
+	}
+
+    /**
+     * @return mixed
+     */
+    public function comments()
+    {
+        return $this->hasMany('Larabook\Statuses\Comment');
+    }
 
 }

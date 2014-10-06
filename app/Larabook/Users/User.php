@@ -15,7 +15,7 @@ use Eloquent, Hash;
  */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
+	use UserTrait, RemindableTrait, EventGenerator, PresentableTrait, Followabletrait;
 
 
     /**
@@ -52,7 +52,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     public function statuses()
 	{
-		return $this->hasMany('Larabook\Statuses\Status');
+		return $this->hasMany('Larabook\Statuses\Status')->latest();
 	}
 
     /**
@@ -90,50 +90,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->username == $user->username;
 	}
 
-	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
-	 */
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
-
-	/**
-	 * Get the password for the user.
-	 *
-	 * @return string
-	 */
-	public function getAuthPassword()
-	{
-		return $this->password;
-	}
-
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getReminderEmail()
-	{
-		return $this->email;
-	}
-
     /**
      * @return mixed
      */
-    public function follows()
+    public function comments()
     {
-        return $this->belongsToMany(self::class, 'follows', 'follower_id', 'followed_id')->withTimestamps();
+        return $this->hasMany('Larabook\Statuses\Comment');
     }
 
-    public function isFollowedBy(User $otherUser)
-    {
-        $idsWhoOtherUserFollows = $otherUser->follows()->lists('followed_id');
-
-        return in_array($this->id, $idsWhoOtherUserFollows);
-    }
 
 
 }

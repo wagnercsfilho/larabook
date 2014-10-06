@@ -53,7 +53,7 @@ class StatusesController extends \BaseController {
 
 		$this->publishStatusForm->validate($input);
 
-		$this->execute(PublishStatusCommand::class);
+		$this->execute(PublishStatusCommand::class, $input);
 
 		Flash::message('Your status has been updated!');
 

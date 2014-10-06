@@ -42,6 +42,9 @@ Route::get('logout', [
 	'uses' => 'SessionsController@destroy'
 ]);
 
+/**
+ * Statuses
+ */
 Route::get('statuses', [
 	'as' => 'statuses_path',
 	'uses' => 'StatusesController@index'
@@ -50,6 +53,11 @@ Route::get('statuses', [
 Route::post('statuses', [
 	'as' => 'statuses_path',
 	'uses' => 'StatusesController@store'
+]);
+
+Route::post('statuses/{id}/comments', [
+    'as' => 'comment_path',
+    'uses' => 'CommentsController@store'
 ]);
 
 Route::get('users', [
@@ -68,7 +76,9 @@ Route::post('follows', [
 ]);
 
 
-Route::delete('follows/{id', [
+Route::delete('follows/{id}', [
 	'as' => 'follow_path',
 	'uses' => 'FollowsController@destroy'
 ]);
+
+Route::controller('password', 'RemindersController');
