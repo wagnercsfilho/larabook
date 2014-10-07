@@ -11,6 +11,15 @@ class UserPresenter extends Presenter {
 		return '//www.gravatar.com/avatar/'.$email.'?s='.$size;
     }
 
+    public function avatarFb($type = '')
+    {
+        if ($type == 'large')
+            return 'https://graph.facebook.com/'.$this->username.'/picture?type=large';
+        else
+            return 'https://graph.facebook.com/'.$this->username.'/picture';
+
+    }
+
     public function followerCount()
     {
         $count = $this->entity->followers()->count();

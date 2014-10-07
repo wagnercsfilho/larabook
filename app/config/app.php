@@ -125,7 +125,8 @@ return array(
 		'Laracasts\Commander\CommanderServiceProvider',
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
-        'Larabook\Providers\EventServiceProvider'
+        'Larabook\Providers\EventServiceProvider',
+        'Artdarek\OAuth\OAuthServiceProvider'
 
 	),
 
@@ -193,7 +194,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Flash'           => 'Laracasts\Flash\Flash'
+		'Flash'           => 'Laracasts\Flash\Flash',
+        'OAuth' => 'Artdarek\OAuth\Facade\OAuth'
 
 	),
 

@@ -27,6 +27,11 @@ Route::post('register', [
 	'uses' => 'RegistrationController@store'
 ]);
 
+Route::get('facebook',[
+    'as' => 'facebook_path',
+    'uses' => 'RegistrationController@loginWithFacebook'
+]);
+
 Route::get('login', [ 
 	'as'=>'login_path', 
 	'uses' => 'SessionsController@create'
@@ -75,10 +80,10 @@ Route::post('follows', [
 	'uses' => 'FollowsController@store'
 ]);
 
-
 Route::delete('follows/{id}', [
 	'as' => 'follow_path',
 	'uses' => 'FollowsController@destroy'
 ]);
 
 Route::controller('password', 'RemindersController');
+

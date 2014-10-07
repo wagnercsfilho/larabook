@@ -3,8 +3,8 @@
 
 @section('content')
 
-	<div class="row">
-			<div class="col-md-4">
+	<div id="social-timeline" class="row-fluid">
+			<div class="span4">
                 <div class="media">
                     <div class="pull-left">
                         @include ('users.partials.avatar', ['size' => 50])
@@ -25,7 +25,7 @@
                 </div>
 			</div>	
 
-			<div class="col-md-6">
+			<div class="span8">
                 @unless ($user->is($currentUser))
                     @include ('users.partials.follow-form')
                 @endif
